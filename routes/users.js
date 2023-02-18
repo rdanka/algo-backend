@@ -8,17 +8,23 @@ const authenticate = require('../middleware/auth');
 router.post('/register', (req, res, next) => {
     let newUser = new User({
         username: req.body.username,
-        email: req.body.email,
         password: req.body.password
     });
 
-    User.addUser(newUser, (err, user) => {
-        if (err) {
-            res.json({ succes: false, msg: 'Failed to register!'})
-        } else {
-            res.status(201).json({ succes: true, msg: 'User registered!'})
+    User.getUserByUsername(req.body.username, (err, user) => {
+        if (err) console.error(err)
+        if (user) return res.json({ succes: false, msg: 'Username already taken!'});
+        else {
+            User.addUser(newUser, (err, user) => {
+                if (err) {
+                    res.json({ succes: false, msg: 'Failed to register!'})
+                } else {
+                    res.status(201).json({ succes: true, msg: 'User registered!'})
+                }
+            });
         }
     });
+    
 });
 
 router.get('/login', (req, res, next) => {
@@ -40,7 +46,6 @@ router.get('/login', (req, res, next) => {
                     user: {
                         id: user._id,
                         username: user.username,
-                        email: user.email
                     }
                 })
             } else {
