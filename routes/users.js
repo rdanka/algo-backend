@@ -13,13 +13,13 @@ router.post('/register', (req, res, next) => {
 
     User.getUserByUsername(req.body.username, (err, user) => {
         if (err) console.error(err)
-        if (user) return res.json({ succes: false, msg: 'Username already taken!'});
+        if (user) return res.json({ success: false, msg: 'Username already taken!'});
         else {
             User.addUser(newUser, (err, user) => {
                 if (err) {
-                    res.json({ succes: false, msg: 'Failed to register!'})
+                    res.json({ success: false, msg: 'Failed to register!'})
                 } else {
-                    res.status(201).json({ succes: true, msg: 'User registered!'})
+                    res.status(201).json({ success: true, msg: 'User registered!'})
                 }
             });
         }
