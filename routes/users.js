@@ -13,7 +13,7 @@ router.post('/register', (req, res, next) => {
 
     User.getUserByUsername(req.body.username, (err, user) => {
         if (err) console.error(err)
-        if (user) return res.json({ success: false, msg: 'Username already taken!'});
+        if (user) return res.status(400).json({success: false, msg:'Username already taken!'});
         else {
             User.addUser(newUser, (err, user) => {
                 if (err) {
@@ -27,7 +27,7 @@ router.post('/register', (req, res, next) => {
     
 });
 
-router.get('/login', (req, res, next) => {
+router.post('/login', (req, res, next) => {
     const username = req.body.username;
     const password = req.body.password;
     User.getUserByUsername(username, (err, user) => {

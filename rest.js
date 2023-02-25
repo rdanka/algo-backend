@@ -11,7 +11,7 @@ mongoose.set('strictQuery', false);
 mongoose.connect(process.env.DATABASE, { useNewUrlParser: true });
 
 mongoose.connection.on('connected', () => {
-    console.log('connected');
+    console.log('Database connected.');
 })
 
 mongoose.connection.on('error', (error) => {
