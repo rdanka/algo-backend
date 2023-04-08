@@ -21,6 +21,7 @@ mongoose.connection.on('error', (error) => {
 const app = express();
 
 const users = require('./routes/users');
+const results = require('./routes/results');
 const passport = require('passport');
 
 // Cors Middleware
@@ -43,6 +44,7 @@ app.use(passport.session());
 // Set static folder
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/users', users);
+app.use('/results', results);
 
 app.use((req, res, next) => {
     res.send('Express working');

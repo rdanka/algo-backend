@@ -1,7 +1,9 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
+const Class = require('../models/class');
 
 // User Schema
+
 const UserSchema = mongoose.Schema({
     username: {
         type: String,
@@ -10,11 +12,14 @@ const UserSchema = mongoose.Schema({
     password: { 
         type: String,
         required: true
+    },
+    classes: {
+        type: [Class.schema],
+        required: true
     }
 });
 
 const User = module.exports = mongoose.model('User', UserSchema);
-
 module.exports.getUserById = (id, callback) => {
     User.findById(id, callback);
 }
@@ -40,3 +45,14 @@ module.exports.comparePassword = (password, hash,  callback) => {
         callback(null, isMatch);
     });
 }
+
+module.exports.addClass = async (userId, students) => {
+    try {
+        const teacher = await User.findById(userId);
+        if (!teacher) return null;
+        teacher.classes.push(students);
+        return teacher.save();
+    } catch (err) {
+        throw err;
+    }
+} 

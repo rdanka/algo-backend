@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/user');
+const Class = require('../models/class');
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
 const authenticate = require('../middleware/auth');
@@ -8,7 +9,8 @@ const authenticate = require('../middleware/auth');
 router.post('/register', (req, res, next) => {
     let newUser = new User({
         username: req.body.username,
-        password: req.body.password
+        password: req.body.password,
+        classes: []
     });
 
     User.getUserByUsername(req.body.username, (err, user) => {
@@ -17,6 +19,7 @@ router.post('/register', (req, res, next) => {
         else {
             User.addUser(newUser, (err, user) => {
                 if (err) {
+                    console.log(err)
                     res.json({ success: false, msg: 'Failed to register!'})
                 } else {
                     res.status(201).json({ success: true, msg: 'User registered!'})
@@ -33,7 +36,7 @@ router.post('/login', (req, res, next) => {
     User.getUserByUsername(username, (err, user) => {
         if (err) throw err;
         if (!user) {
-            return res.json({success: false, msg: 'User not found!'});
+            return res.status(400).json({success: false, msg: 'User not found!'});
         }
 
         User.comparePassword(password, user.password, (err, isMatch) => {
@@ -57,6 +60,22 @@ router.post('/login', (req, res, next) => {
 
 router.get('/profile', authenticate,  (req, res, next) => {
     res.json({user: req.user});
+});
+
+router.get('/addClass', authenticate,  (req, res, next) => {
+    res.json({user: req.user});
+    let newClass = new Class({
+        className: req.body.className,
+        teacherId: req.user._id,
+        studentIds: req.body.studentList
+    });
+    User.addClass(req.user._id, newClass, (err, user) => {
+        if (err) {
+            res.status(401).json({ success: false, msg: 'Failed to add Class!'})
+        } else {
+            res.status(201).json({ success: true, msg: 'Class added!'})
+        }
+    })
 });
 
 module.exports = router;
