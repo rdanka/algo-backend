@@ -23,11 +23,31 @@ router.post('/add', async (req, res, next) => {
             res.status(201).json({ success: true, msg: 'Result saved!'})
         }
     });
-    
+
 });
 
-router.get('/profile', authenticate,  (req, res, next) => {
-    res.json({user: req.user});
+router.get('/getByStudentId', authenticate,  (req, res, next) => {
+    Result.find({studentId: req.query.studentId},(err, result) => {
+        if (err) {
+            console.log(err)
+            res.json({ success: false, msg: 'Failed to save result!'})
+        } else {
+            res.status(201).json(result)
+        }
+    })
+});
+
+
+router.get('/getByClassId', authenticate,  async (req, res, next) => {
+    const classId = await User.getClassIdByClassName(req.query.className);
+    Result.find({classId},(err, result) => {
+        if (err) {
+            console.log(err)
+            res.json({ success: false, msg: 'Failed to save result!'})
+        } else {
+            res.status(201).json(result)
+        }
+    })
 });
 
 module.exports = router;

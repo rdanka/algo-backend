@@ -56,3 +56,8 @@ module.exports.addClass = async (userId, students) => {
         throw err;
     }
 } 
+
+module.exports.getClassIdByClassName = async (className) => { 
+    const classId = await User.findOne({ 'classes': { $elemMatch: { 'className': className } } }, { 'classes.$': 1 });
+    return classId.classes[0]._id;
+}

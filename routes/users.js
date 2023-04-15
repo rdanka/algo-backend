@@ -42,7 +42,7 @@ router.post('/login', (req, res, next) => {
         User.comparePassword(password, user.password, (err, isMatch) => {
             if (err) throw err;
             if (isMatch) {
-                const accesstoken = jwt.sign(user.toJSON(), process.env.ACCES_TOKEN_SECRET, { expiresIn: '20m' });
+                const accesstoken = jwt.sign(user.toJSON(), process.env.ACCES_TOKEN_SECRET, { expiresIn: '60m' });
                 res.json({
                     success: true,
                     accessToken: `JWT ${accesstoken}`,
@@ -62,7 +62,22 @@ router.get('/profile', authenticate,  (req, res, next) => {
     res.json({user: req.user});
 });
 
-router.get('/addClass', authenticate,  (req, res, next) => {
+router.get('/getAllClasses', authenticate, async (req, res) => {
+    try {
+      const user = await User.findById(req.user._id).populate('classes');
+      if (!user) {
+        return res.status(404).json({ success: false, message: 'User not found' });
+      }
+      const classes = user.classes;
+      res.status(200).json({ success: true, classes });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, message: 'Internal server error' });
+    }
+});
+
+
+router.post('/addClass', authenticate,  (req, res, next) => {
     res.json({user: req.user});
     let newClass = new Class({
         className: req.body.className,
