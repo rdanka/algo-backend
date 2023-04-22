@@ -25,6 +25,7 @@ const results = require('./routes/results');
 const quiz = require('./routes/quiz');
 const passport = require('passport');
 const Quiz = require('./models/quiz');
+const students = require('./routes/students');
 
 // Cors Middleware
 app.use(cors());
@@ -50,6 +51,7 @@ app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/users', users);
 app.use('/results', results);
+app.use('/students', students);
 app.use('/quiz', quiz);
 
 Quiz.initialize();
