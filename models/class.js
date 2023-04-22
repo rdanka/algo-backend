@@ -27,3 +27,4 @@ module.exports.getClassByName = (username, callback) => {
     const query = { username: username };
     Class.findOne(query, callback);
 }
+

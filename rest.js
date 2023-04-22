@@ -22,7 +22,9 @@ const app = express();
 
 const users = require('./routes/users');
 const results = require('./routes/results');
+const quiz = require('./routes/quiz');
 const passport = require('passport');
+const Quiz = require('./models/quiz');
 
 // Cors Middleware
 app.use(cors());
@@ -37,6 +39,9 @@ app.use(session({
     saveUninitialized: true
 }));
 
+
+
+
 // Passport
 app.use(passport.initialize());
 app.use(passport.session());
@@ -45,6 +50,10 @@ app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/users', users);
 app.use('/results', results);
+app.use('/quiz', quiz);
+
+Quiz.initialize();
+
 
 app.use((req, res, next) => {
     res.send('Express working');
