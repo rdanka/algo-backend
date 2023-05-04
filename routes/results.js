@@ -30,7 +30,7 @@ router.get('/getByStudentId', authenticate,  (req, res, next) => {
     Result.find({studentId: req.query.studentId},(err, result) => {
         if (err) {
             console.log(err)
-            res.json({ success: false, msg: 'Failed to save result!'})
+            res.json({ success: false, msg: 'Failed to find student!'})
         } else {
             res.status(201).json(result)
         }
@@ -43,7 +43,7 @@ router.get('/getByClassId', authenticate,  async (req, res, next) => {
     Result.find({classId},(err, result) => {
         if (err) {
             console.log(err)
-            res.json({ success: false, msg: 'Failed to save result!'})
+            res.json({ success: false, msg: 'Failed to find class!'})
         } else {
             res.status(201).json(result)
         }

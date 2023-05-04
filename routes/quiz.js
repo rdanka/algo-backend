@@ -41,21 +41,3 @@ router.post('/addQuestion', async (req, res, next) => {
 });
 
 module.exports = router;
-
-/* question: 'What is the first step of the bubble sort algorithm?',
-options: ['Compare the first two elements', 'Compare the last two elements', 'Compare the middle two elements', 'Compare all adjacent elements'],
-answer: 'Compare the first two elements' */
-
-/*
-{
-  array: [3, 7, 1, 9, 2],
-  question: "What is the final array after two passes of selection sort on the given array?",
-  options: [
-    "[1, 2, 3, 7, 9]",
-    "[2, 1, 3, 7, 9]",
-    "[1, 2, 3, 9, 7]",
-    "[3, 1, 2, 7, 9]"
-  ],
-  answer: "[1, 2, 3, 9, 7]"
-}
-*/
