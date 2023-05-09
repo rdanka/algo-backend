@@ -11,11 +11,11 @@ mongoose.set('strictQuery', false);
 mongoose.connect(process.env.DATABASE, { useNewUrlParser: true });
 
 mongoose.connection.on('connected', () => {
-    console.log('Database connected.');
+    console.info('Database connected.');
 })
 
 mongoose.connection.on('error', (error) => {
-    console.log(error);
+    console.error(error);
 })
 
 const app = express();
@@ -23,7 +23,6 @@ const app = express();
 const users = require('./routes/users');
 const results = require('./routes/results');
 const quiz = require('./routes/quiz');
-const passport = require('passport');
 const Quiz = require('./models/quiz');
 const students = require('./routes/students');
 
@@ -39,13 +38,6 @@ app.use(session({
     resave: true,
     saveUninitialized: true
 }));
-
-
-
-
-// Passport
-app.use(passport.initialize());
-app.use(passport.session());
 
 // Set static folder
 app.use(express.static(path.join(__dirname, 'public')));
@@ -63,5 +55,3 @@ app.use((req, res, next) => {
 
 
 module.exports = app;
-
-

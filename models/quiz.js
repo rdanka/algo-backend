@@ -69,7 +69,7 @@ module.exports.initialize = () => {
                 if (err) {
                   console.error(err);
                 } else {
-                  console.log('Quizzes initialized successfully');
+                  console.info('Quizzes initialized successfully');
                 }
               });
         }
@@ -90,7 +90,7 @@ module.exports.addQuestionToAlgorithm = (algorithm, question, callback) => {
           console.error(errMessage);
           callback(new Error(errMessage), null);
         } else {
-          console.log('Question added successfully');
+          console.info('Question added successfully');
           callback(null, result);
         }
       }

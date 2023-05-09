@@ -8,10 +8,9 @@ const authenticate = require('../middleware/auth');
 const ObjectId = require('mongodb').ObjectId;
 
 router.get('/getQuizByAlgorithm', async (req, res, next) => {
-    console.log(req.query.algorithm)
     Quiz.getQuizByAlgorithm(req.query.algorithm, (err, result) => {
         if (err) {
-            console.log(err)
+            console.error(err)
             res.json({ success: false, msg: 'Failed to fetch questions!'})
         } else {    
             res.status(201).json(result)

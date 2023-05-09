@@ -17,7 +17,7 @@ router.post('/add', async (req, res, next) => {
     let classId = await User.findOne({ 'classes': { $elemMatch: { 'studentIds': req.body.studentId } } }, { 'classes.$': 1 });
     Result.addResults(studentId, classId.classes[0]._id, algorithmName, result, (err, result) => {
         if (err) {
-            console.log(err)
+            console.error(err)
             res.json({ success: false, msg: 'Failed to save result!'})
         } else {
             res.status(201).json({ success: true, msg: 'Result saved!'})
@@ -29,7 +29,7 @@ router.post('/add', async (req, res, next) => {
 router.get('/getByStudentId', authenticate,  (req, res, next) => {
     Result.find({studentId: req.query.studentId},(err, result) => {
         if (err) {
-            console.log(err)
+            console.error(err)
             res.json({ success: false, msg: 'Failed to find student!'})
         } else {
             res.status(201).json(result)
@@ -42,7 +42,7 @@ router.get('/getByClassId', authenticate,  async (req, res, next) => {
     const classId = await User.getClassIdByClassName(req.query.className);
     Result.find({classId},(err, result) => {
         if (err) {
-            console.log(err)
+            console.error(err)
             res.json({ success: false, msg: 'Failed to find class!'})
         } else {
             res.status(201).json(result)
