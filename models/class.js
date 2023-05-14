@@ -7,10 +7,6 @@ const ClassSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    teacherId: {
-        type: ObjectId,
-        required: true
-    },
     studentIds: { 
         type: [String],
         required: true

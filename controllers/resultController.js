@@ -23,7 +23,7 @@ module.exports.getResultsByStudentId = (req, res, next) => {
     Result.find({studentId: req.query.studentId},(err, result) => {
         if (err) {
             console.error(err)
-            res.json({ success: false, msg: 'Failed to find student!'})
+            res.status(400).json({ success: false, msg: 'Failed to find student!'})
         } else {
             res.status(201).json(result)
         }

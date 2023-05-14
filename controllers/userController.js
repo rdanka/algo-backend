@@ -75,7 +75,6 @@ module.exports.addClass = (req, res, next) => {
     res.json({user: req.user});
     let newClass = new Class({
         className: req.body.className,
-        teacherId: req.user._id,
         studentIds: req.body.studentList
     });
     User.addClass(req.user._id, newClass, (err, user) => {

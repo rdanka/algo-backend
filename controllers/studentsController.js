@@ -16,15 +16,12 @@ module.exports.login = (req, res, next) => {
                 })
             }
             if (isRegistered) {
-                res.status(201).json({ success: true, msg: 'User registered!', neptunId})
+                res.status(201).json({ success: true, msg: 'Student succesfully logged in!', neptunId})
             } else {
-                res.status(400).json({ success: false, msg: 'Student has not been registered yet!'})
+                res.status(400).json({ success: false, msg: 'Student has not been registered yet!', neptunId})
             }
         })
      } catch(err) {
         console.error("error")
-     }
-
-    
-    
+     }    
 }

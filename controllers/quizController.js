@@ -1,6 +1,7 @@
+// Quiz Controller
 const Quiz = require('../models/quiz');
 
-module.exports.getQuizByAlgorithm =  async (req, res, next) => {
+module.exports.getQuizByAlgorithm =  async (req, res, next) => { // bubble, selection, quick ,merge
     Quiz.getQuizByAlgorithm(req.query.algorithm, (err, result) => {
         if (err) {
             console.error(err)
